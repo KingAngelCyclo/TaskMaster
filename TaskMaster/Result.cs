@@ -27,7 +27,7 @@
             Succesd = true,
             Message = message
         };
-        public static Result<T> Failure(string message)
+        public static new Result<T> Failure(string message)
         => new()
         {
             Message = message
@@ -43,7 +43,7 @@
             Succesd = true,
             Message = message
         };
-        public static ResultList<T> Failure(string message)
+        public static new ResultList<T> Failure(string message)
         => new()
         {
             Message = message
