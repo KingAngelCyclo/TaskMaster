@@ -3,15 +3,23 @@ using TaskMaster.Data;
 using TaskMaster.Data.Dtos;
 using TaskMaster.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-
-
+using Microsoft.AspNetCore.Identity;
 
 public partial class TareaService : ITareaSevice
 {
     private readonly IApplicationDbContext dbContext;
-    public TareaService(IApplicationDbContext dbContext)
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public TareaService(IApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
     {
         this.dbContext = dbContext;
+        _userManager =  userManager;
+    }
+    public async Task<List<Tarea>> GetTasksForUserAsync(string userId)
+    {
+        return await dbContext.Tareas
+            .Where(t => t.UserId == userId)
+            .ToListAsync();
     }
     public async Task<Result> Create(TareaRequest tarea)
     {
